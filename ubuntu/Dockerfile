@@ -1,8 +1,8 @@
-# Use the official Ubuntu image as the base
+# Use a smaller base image
 FROM ubuntu:22.04
 
-# Update the package list and install required packages
-RUN apt-get update && apt-get install -y \
+# Update the package list and install required packages without recommendations
+RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
     nmap \
     netcat \
@@ -10,7 +10,8 @@ RUN apt-get update && apt-get install -y \
     telnet \
     iputils-ping \
     dnsutils \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Set the default command
 CMD ["bash"]
